@@ -1,7 +1,7 @@
 function App() {
   return (
     <div className='App'>
-      <h1>Weather Dashboard</h1>
+      <h1 className='text-3xl font-bold underline'>Weather Dashboard</h1>
     </div>
   );
 }

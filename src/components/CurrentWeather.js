@@ -9,7 +9,7 @@ import Box from './Box';
 const KEY = '77d532a21cdfe00145926cf0513e15f5';
 const baseURL = 'https://api.openweathermap.org/data/2.5/weather';
 
-export default function CurrentWeather({ cityName }) {
+export default function CurrentWeather({ cityName, formatDate }) {
   const [currweather, setCurrWeather] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,7 +37,7 @@ export default function CurrentWeather({ cityName }) {
 
   return (
     <div className='flex flex-row mt-3'>
-      <div className='flex flex-col flex-initial w-1/3 '>
+      <div className='flex flex-col flex-initial w-1/2 '>
         <Box>
           <div className='pb-3'>
             <img
@@ -61,12 +61,12 @@ export default function CurrentWeather({ cityName }) {
             </div>
             <div className='flex items-center pt-2'>
               <CiCalendarDate size={22} />
-              <span className='ps-1'>{new Date().toDateString()}</span>
+              <span className='ps-1'>{formatDate(Date())}</span>
             </div>
           </div>
         </Box>
       </div>
-      <div className='flex flex-col justify-items-center flex-initial w-64 ms-3'>
+      <div className='flex flex-col justify-items-center flex-initial w-1/2 ms-3'>
         <Box>
           <div className='flex items-center'>
             <FaWind size={22} />

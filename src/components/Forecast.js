@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import Chart from './Chart';
+import Box from './Box';
 
 const KEY = '77d532a21cdfe00145926cf0513e15f5';
 const baseURL = 'https://api.openweathermap.org/data/2.5/forecast';
 
-export default function Forecast({ cityName }) {
+export default function Forecast({ cityName, formatDate }) {
   const [forecast, setForecast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -55,16 +56,22 @@ export default function Forecast({ cityName }) {
   return (
     <>
       {error && <p>Error: {error}</p>}
-      <ul>
+      <ul className='grid grid-cols-3 gap-2 mt-4'>
         {isLoading
           ? 'Loading'
           : forecastData.map(item => (
-              <li key={item.date}>
-                Date: {item.date}, Min Temp: {item.minTemp.toFixed(2)}°C, Max
-                Temp: {item.maxTemp.toFixed(2)}°C
-              </li>
+              <Box>
+                <li key={item.date} className='flex'>
+                  <span>{formatDate(item.date)}</span>
+                  <div className='flex flex-col justify-between  border-l border-slate-500 ps-3'>
+                    <span>{item.minTemp.toFixed(2)}°C </span>
+                    <span>{item.maxTemp.toFixed(2)}°C</span>
+                  </div>
+                </li>
+              </Box>
             ))}
       </ul>
+
       {isLoading ? 'Loading' : <Chart forecastData={forecastData} />}
     </>
   );

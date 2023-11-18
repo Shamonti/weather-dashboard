@@ -13,6 +13,19 @@ function App() {
     setCityName(city);
   };
 
+  const formatDate = inputDate => {
+    const date = new Date(inputDate);
+
+    // Format the date
+    const formattedDate = new Intl.DateTimeFormat('en-US', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+    }).format(date);
+
+    return formattedDate;
+  };
+
   return (
     <div className='p-6'>
       <NavBar>
@@ -21,10 +34,10 @@ function App() {
 
       <Main>
         <Heading>Today's Overview</Heading>
-        <CurrentWeather cityName={cityName} />
+        <CurrentWeather cityName={cityName} formatDate={formatDate} />
 
-        <p>Forecast</p>
-        <Forecast cityName={cityName} />
+        <Heading>Next 5 Days</Heading>
+        <Forecast cityName={cityName} formatDate={formatDate} />
       </Main>
     </div>
   );

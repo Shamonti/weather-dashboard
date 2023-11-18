@@ -32,3 +32,7 @@ This was a challenge from OrangeToolz for the React Developer role. The project 
 One of the main challenges I encountered was the 5-day forecast. I expected the API to return data based on dates, but soon realized it was designed to display data at 3-hour intervals for each forecast. This led me to spend some time studying the API response.
 
 At the end of the day, the technologies employed in this project include React, Chart.js, React Icons, and a substantial amount of JSX. I opted for Tailwind CSS to streamline responsiveness and invest more time in diving into weird technological rabbit holes.
+
+## Live Demo
+
+[Link](https://weather-dashboard-virid.vercel.app/)

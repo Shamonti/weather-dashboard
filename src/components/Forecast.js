@@ -2,26 +2,36 @@ import { useEffect, useState } from 'react';
 import Chart from './Chart';
 
 const KEY = '77d532a21cdfe00145926cf0513e15f5';
-const lat = '23.811056';
-const lon = '90.4152';
+const baseURL = 'https://api.openweathermap.org/data/2.5/forecast';
 
-export default function Forecast() {
+export default function Forecast({ cityName }) {
   const [forecast, setForecast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(function () {
-    setIsLoading(true);
-    async function fetchForecast() {
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${KEY}`
-      );
-      const data = await res.json();
-      setForecast(data.list.slice(8, 40));
-      setIsLoading(false);
-    }
-    // console.log(forecast);
+  useEffect(() => {
+    const fetchForecast = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch(
+          `${baseURL}?q=${cityName}&units=metric&appid=${KEY}`
+        );
+        if (!res.ok) {
+          throw new Error('Failed to fetch forecast data');
+        }
+        const data = await res.json();
+        setForecast(data.list.slice(8, 40));
+        setError(null);
+      } catch (error) {
+        console.error('Error fetching forecast data:', error.message);
+        setError('Error fetching forecast data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchForecast();
-  }, []);
+  }, [cityName]);
 
   const forecastData = forecast.reduce((acc, item) => {
     const date = item.dt_txt.split(' ')[0];
@@ -42,10 +52,9 @@ export default function Forecast() {
     return acc;
   }, []);
 
-  console.log();
-
   return (
     <>
+      {error && <p>Error: {error}</p>}
       <ul>
         {isLoading
           ? 'Loading'

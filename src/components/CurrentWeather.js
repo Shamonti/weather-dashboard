@@ -1,26 +1,30 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import SearchBar from './SearchBar';
 
 const KEY = '77d532a21cdfe00145926cf0513e15f5';
-const lat = '23.811056';
-const lon = '90.4152';
+const baseURL = 'https://api.openweathermap.org/data/2.5/weather';
 
-export default function CurrentWeather() {
+export default function CurrentWeather({ cityName }) {
   const [currweather, setCurrWeather] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(function () {
+  const fetchWeatherByCity = async cityName => {
     setIsLoading(true);
-    async function fetchCurrentWeather() {
-      const res = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${KEY}`
-      );
+    try {
+      const res = await fetch(`${baseURL}?q=${cityName}&appid=${KEY}`);
       const data = await res.json();
       setCurrWeather(data);
       // console.log(data);
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    } finally {
       setIsLoading(false);
     }
-    fetchCurrentWeather();
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchWeatherByCity(cityName);
+  }, [cityName]);
 
   if (isLoading) return 'Loading';
 
@@ -31,7 +35,7 @@ export default function CurrentWeather() {
         <p>
           CurrentWeather
           {currweather.weather && currweather.weather[0].description}
-          {currweather.main && currweather.main.temp}
+          {currweather.main && currweather.main.temp - 273.15}
         </p>
       </div>
       <div className='bg-yellow-500'>

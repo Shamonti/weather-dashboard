@@ -15,52 +15,34 @@ export default function CurrentWeather({ cityName, formatDate }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  //Display current weather details for Dhaka city on Mount
-  useEffect(() => {
-    const fetchWeatherByCity = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`${baseURL}?q=Dhaka&units=metric&appid=${KEY}`);
-        if (!res.ok) {
-          throw new Error('Failed to fetch forecast data');
-        }
-        const data = await res.json();
-        setCurrWeather(data);
-        setError(null);
-      } catch (error) {
-        console.error('Error fetching forecast data:', error.message);
-        setError('Error fetching forecast data. Please try again later.');
-      } finally {
-        setIsLoading(false);
+  const fetchWeatherByCity = async city => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${baseURL}?q=${city}&units=metric&appid=${KEY}`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch forecast data');
       }
-    };
+      const data = await res.json();
+      setCurrWeather(data);
+      setError(null);
+    } catch (error) {
+      console.error('Error fetching forecast data:', error.message);
+      setError('Error fetching forecast data. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchWeatherByCity();
+  //Display weather forecast details for Dhaka city on Mount
+  useEffect(() => {
+    fetchWeatherByCity('Dhaka');
   }, []);
 
-  //Display current weather details for the city name on query using Searchbar
+  //Display weather forecast details for the city name on query using Searchbar
   useEffect(() => {
-    const fetchWeatherByCity = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(
-          `${baseURL}?q=${cityName}&units=metric&appid=${KEY}`
-        );
-        if (!res.ok) {
-          throw new Error('Failed to fetch forecast data');
-        }
-        const data = await res.json();
-        setCurrWeather(data);
-        setError(null);
-      } catch (error) {
-        console.error('Error fetching forecast data:', error.message);
-        setError('Error fetching forecast data. Please try again later.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchWeatherByCity();
+    if (cityName.trim() !== '') {
+      fetchWeatherByCity(cityName);
+    }
   }, [cityName]);
 
   if (isLoading) return 'Loading';

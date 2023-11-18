@@ -10,50 +10,34 @@ export default function Forecast({ cityName, formatDate }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchForecast = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`${baseURL}?q=Dhaka&units=metric&appid=${KEY}`);
-        if (!res.ok) {
-          throw new Error('Failed to fetch forecast data');
-        }
-        const data = await res.json();
-        setForecast(data.list.slice(8, 40));
-        setError(null);
-      } catch (error) {
-        console.error('Error fetching forecast data:', error.message);
-        setError('Error fetching forecast data. Please try again later.');
-      } finally {
-        setIsLoading(false);
+  const fetchForecastData = async city => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${baseURL}?q=${city}&units=metric&appid=${KEY}`);
+      if (!res.ok) {
+        throw new Error('Failed to fetch forecast data');
       }
-    };
+      const data = await res.json();
+      setForecast(data.list.slice(8, 40));
+      setError(null);
+    } catch (error) {
+      console.error('Error fetching forecast data:', error.message);
+      setError('Error fetching forecast data. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchForecast();
+  //Display weather forecast details for Dhaka city on Mount
+  useEffect(() => {
+    fetchForecastData('Dhaka');
   }, []);
 
+  //Display weather forecast details for the city name on query using Searchbar
   useEffect(() => {
-    const fetchForecast = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(
-          `${baseURL}?q=${cityName}&units=metric&appid=${KEY}`
-        );
-        if (!res.ok) {
-          throw new Error('Failed to fetch forecast data');
-        }
-        const data = await res.json();
-        setForecast(data.list.slice(8, 40));
-        setError(null);
-      } catch (error) {
-        console.error('Error fetching forecast data:', error.message);
-        setError('Error fetching forecast data. Please try again later.');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchForecast();
+    if (cityName.trim() !== '') {
+      fetchForecastData(cityName);
+    }
   }, [cityName]);
 
   //Grouping forecast Data for the same day
@@ -76,7 +60,7 @@ export default function Forecast({ cityName, formatDate }) {
     return acc;
   }, []);
 
-  // if (isLoading) return 'Loading';
+  if (isLoading) return 'Loading';
   // if (error) return <ErrorMessage message={error} />;
 
   //Only Display data when the API is not loading and there is no error

@@ -5,6 +5,8 @@ import NavBar from './components/NavBar';
 import Main from './components/Main';
 import { useState } from 'react';
 import Heading from './components/Heading';
+import Loader from './components/Loader';
+import ErrorMessage from './components/ErrorMessage';
 
 function App() {
   const [cityName, setCityName] = useState('');
@@ -33,10 +35,7 @@ function App() {
       </NavBar>
 
       <Main>
-        <Heading>Today's Overview</Heading>
         <CurrentWeather cityName={cityName} formatDate={formatDate} />
-
-        <Heading>Next 5 Days</Heading>
         <Forecast cityName={cityName} formatDate={formatDate} />
       </Main>
     </div>

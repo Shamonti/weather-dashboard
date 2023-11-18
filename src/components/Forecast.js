@@ -56,6 +56,7 @@ export default function Forecast({ cityName, formatDate }) {
     fetchForecast();
   }, [cityName]);
 
+  //Grouping forecast Data for the same day
   const forecastData = forecast.reduce((acc, item) => {
     const date = item.dt_txt.split(' ')[0];
     const existingDay = acc.find(day => day.date === date);
@@ -78,6 +79,7 @@ export default function Forecast({ cityName, formatDate }) {
   // if (isLoading) return 'Loading';
   // if (error) return <ErrorMessage message={error} />;
 
+  //Only Display data when the API is not loading and there is no error
   if (!isLoading && !error)
     return (
       <>
@@ -102,7 +104,7 @@ export default function Forecast({ cityName, formatDate }) {
               ))}
         </ul>
 
-        {isLoading ? 'Loading' : <Chart forecastData={forecastData} />}
+        <Chart forecastData={forecastData} />
       </>
     );
 }

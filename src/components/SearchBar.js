@@ -9,6 +9,7 @@ const SearchBar = ({ onSearch }) => {
     }
   };
 
+  //Search on hitting Enter
   const handleKeyDown = event => {
     if (event.key === 'Enter') {
       handleSearch();

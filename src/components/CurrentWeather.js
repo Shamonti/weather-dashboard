@@ -15,6 +15,7 @@ export default function CurrentWeather({ cityName, formatDate }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  //Display current weather details for Dhaka city on Mount
   useEffect(() => {
     const fetchWeatherByCity = async () => {
       setIsLoading(true);
@@ -37,6 +38,7 @@ export default function CurrentWeather({ cityName, formatDate }) {
     fetchWeatherByCity();
   }, []);
 
+  //Display current weather details for the city name on query using Searchbar
   useEffect(() => {
     const fetchWeatherByCity = async () => {
       setIsLoading(true);
@@ -64,6 +66,7 @@ export default function CurrentWeather({ cityName, formatDate }) {
   if (isLoading) return 'Loading';
   if (error) return <ErrorMessage message={error} />;
 
+  //Only Display data when the API is not loading and there is no error
   if (!isLoading && !error)
     return (
       <div className='flex flex-col md:flex-row mt-3'>

@@ -1,6 +1,7 @@
 import Forecast from './components/Forecast';
 import CurrentWeather from './components/CurrentWeather';
 import SearchBar from './components/SearchBar';
+import NavBar from './components/NavBar';
 import { useState } from 'react';
 
 function App() {
@@ -11,11 +12,10 @@ function App() {
   };
 
   return (
-    <div className='App'>
-      <header>
-        <h1 className='text-3xl font-bold underline'>Weather Dashboard</h1>
+    <div className='p-6'>
+      <NavBar>
         <SearchBar onSearch={handleSearch} />
-      </header>
+      </NavBar>
 
       <main>
         <CurrentWeather cityName={cityName} />

@@ -2,7 +2,9 @@ import Forecast from './components/Forecast';
 import CurrentWeather from './components/CurrentWeather';
 import SearchBar from './components/SearchBar';
 import NavBar from './components/NavBar';
+import Main from './components/Main';
 import { useState } from 'react';
+import Heading from './components/Heading';
 
 function App() {
   const [cityName, setCityName] = useState('');
@@ -17,12 +19,13 @@ function App() {
         <SearchBar onSearch={handleSearch} />
       </NavBar>
 
-      <main>
+      <Main>
+        <Heading>Today's Overview</Heading>
         <CurrentWeather cityName={cityName} />
 
         <p>Forecast</p>
         <Forecast cityName={cityName} />
-      </main>
+      </Main>
     </div>
   );
 }

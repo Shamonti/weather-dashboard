@@ -36,8 +36,8 @@ export default function CurrentWeather({ cityName, formatDate }) {
   if (isLoading) return 'Loading';
 
   return (
-    <div className='flex flex-row mt-3'>
-      <div className='flex flex-col flex-initial w-1/2 '>
+    <div className='flex flex-col md:flex-row mt-3'>
+      <div className='flex flex-col flex-initial w-full md:w-1/2 '>
         <Box>
           <div className='pb-3'>
             <img
@@ -66,7 +66,7 @@ export default function CurrentWeather({ cityName, formatDate }) {
           </div>
         </Box>
       </div>
-      <div className='flex flex-col justify-items-center flex-initial w-1/2 ms-3'>
+      <div className='flex flex-col justify-items-center flex-initial w-full md:w-1/2 md:ms-3'>
         <Box>
           <div className='flex items-center'>
             <FaWind size={22} />

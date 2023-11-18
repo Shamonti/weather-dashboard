@@ -57,7 +57,7 @@ const Chart = ({ forecastData }) => {
   };
 
   return (
-    <div className='mt-6'>
+    <div className='mt-6 flex justify-center'>
       <Line data={data} options={config} />
     </div>
   );

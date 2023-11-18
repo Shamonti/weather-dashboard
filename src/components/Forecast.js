@@ -56,16 +56,21 @@ export default function Forecast({ cityName, formatDate }) {
   return (
     <>
       {error && <p>Error: {error}</p>}
-      <ul className='grid grid-cols-3 gap-2 mt-4'>
+      <ul className='grid grid-cols-1 md:grid-cols-3 gap-2 mt-4'>
         {isLoading
           ? 'Loading'
           : forecastData.map(item => (
               <Box>
-                <li key={item.date} className='flex'>
-                  <span>{formatDate(item.date)}</span>
-                  <div className='flex flex-col justify-between  border-l border-slate-500 ps-3'>
-                    <span>{item.minTemp.toFixed(2)}°C </span>
-                    <span>{item.maxTemp.toFixed(2)}°C</span>
+                <li
+                  key={item.date}
+                  className='flex items-center justify-items-end'
+                >
+                  <div className='w-1/2 text-start pe-2'>
+                    <span>{formatDate(item.date)}</span>
+                  </div>
+                  <div className='flex flex-col border-l border-slate-500 ps-2 w-1/2 text-end'>
+                    <span>Min: {item.minTemp.toFixed(2)}°C </span>
+                    <span>Max: {item.maxTemp.toFixed(2)}°C</span>
                   </div>
                 </li>
               </Box>

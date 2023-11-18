@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Chart from './Chart';
 import Box from './Box';
+import Heading from './Heading';
 
 const KEY = 'b8639626f07906764f0cc4875c2ac854';
 const baseURL = 'https://api.openweathermap.org/data/2.5/forecast';
@@ -67,6 +68,7 @@ export default function Forecast({ cityName, formatDate }) {
   if (!isLoading && !error)
     return (
       <>
+        <Heading>Next 5 Days</Heading>
         <ul className='grid grid-cols-1 md:grid-cols-3 gap-2 mt-4'>
           {isLoading
             ? 'Loading'

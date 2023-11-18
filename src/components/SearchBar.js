@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const SearchBar = ({ onSearch }) => {
-  const [cityName, setCityName] = useState('');
+  const [cityName, setCityName] = useState('Dhaka');
 
   const handleSearch = () => {
     if (cityName.trim() !== '') {

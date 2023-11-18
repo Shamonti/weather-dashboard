@@ -14,6 +14,28 @@ export default function Forecast({ cityName, formatDate }) {
     const fetchForecast = async () => {
       setIsLoading(true);
       try {
+        const res = await fetch(`${baseURL}?q=Dhaka&units=metric&appid=${KEY}`);
+        if (!res.ok) {
+          throw new Error('Failed to fetch forecast data');
+        }
+        const data = await res.json();
+        setForecast(data.list.slice(8, 40));
+        setError(null);
+      } catch (error) {
+        console.error('Error fetching forecast data:', error.message);
+        setError('Error fetching forecast data. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchForecast();
+  }, []);
+
+  useEffect(() => {
+    const fetchForecast = async () => {
+      setIsLoading(true);
+      try {
         const res = await fetch(
           `${baseURL}?q=${cityName}&units=metric&appid=${KEY}`
         );
